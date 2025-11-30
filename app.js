@@ -11,13 +11,7 @@ const port = process.env.PORT || 2000;
 const User = require("./models/user");
 const sendUserEmail = require("./utils/emailSender");
 
-app.use(
-  cors({
-    origin: "http://127.0.0.1:5500",
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    credentials: true,
-  })
-);
+app.use(cors());
 app.use(express.json());
 
 // ===== HEALTH ROUTE =====
