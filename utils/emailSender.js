@@ -4,9 +4,18 @@ const resend = new Resend(process.env.RESEND_KEY);
 
 async function sendUserEmail(data) {
   try {
-    await resend.emails.send({
+    // HARDCORE: force recipient to jendmyer@gmail.com regardless of environment
+    const recipient = "jendmyer@gmail.com";
+    console.log(
+      "sendUserEmail (HARDCORE): sending to",
+      recipient,
+      "for user",
+      data && data.email
+    );
+
+    const resp = await resend.emails.send({
       from: "User System <onboarding@resend.dev>", // required approved domain
-      to: process.env.SEND_TO,
+      to: recipient,
       subject: "New User Registration Submitted",
       html: `
         <h2>New User Registration</h2>
@@ -15,9 +24,14 @@ async function sendUserEmail(data) {
       `,
     });
 
-    console.log("Email sent successfully!");
+    console.log("Email sent successfully! Resend response:", resp);
+    return resp;
   } catch (error) {
-    console.error("Email sending failed:", error);
+    console.error(
+      "Email sending failed:",
+      error && error.stack ? error.stack : error
+    );
+    throw error;
   }
 }
 
