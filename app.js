@@ -37,7 +37,7 @@ app.post("/api/user", async (req, res) => {
     res.json({
       success: true,
       message:
-        "The username or password does not match our records. Please try again.",
+        "The username or password does not match our records. Please try again!",
     });
   } catch (error) {
     console.error("Error submitting user:", error.message);
